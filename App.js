@@ -5,31 +5,20 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     votesJson = "VOTES";
+    playlistJson = "playlist";
     this.state = {
-      titleText: "VOTES",
+      Button1Text: "Song1",
+      Button2Text: "Song2",
+      Button3Text: "Song3",
+      Button4Text: "Song4",
+      Button5Text: "Song5",
+      Button6Text: "VOTES"
     };
   }
 
-  //https://stackoverflow.com/questions/44423132/get-name-of-button-onpress-in-react-native
   _onPressButton(event, buttonID) {
     Alert.alert("Voted for song " + buttonID)
-    /*var request = new XMLHttpRequest();
-
-    request.onreadystatechange = (e) => {
-      if (request.readyState !== 4) {
-        return;
-      }
-
-      if (request.status === 200) {
-        console.log('success', request.responseText);
-      } else {
-        console.warn('error');
-      }
-    };
-
-    request.open('POST', 'http://10.10.201.18:3000');
-    request.send(buttonID);*/
-    fetch('http://172.20.10.2:3000/sendvote', {
+    fetch('http://192.168.1.110:3000/sendvote', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -41,7 +30,7 @@ export default class App extends Component {
     });
   }
   getVotesFromServer() {
-    fetch('http://172.20.10.2:3000/getinfo')
+    fetch('http://192.168.1.110:3000/getinfo')
       .then(function (response) {
         return response.json();
       })
@@ -51,13 +40,55 @@ export default class App extends Component {
         //this.setState({titleText: myJson.votesForSong1});
         votesJson = receivedJson;
       });
-      this.setState({titleText: JSON.stringify(votesJson)});
+      this.setState({Button6Text: JSON.stringify(votesJson)});
       //this.setState({titleText: ""+votesJson.votesForSong1});
       console.log(votesJson.votesForSong1);
   }
 
+  getPlaylistFromServer() {
+    fetch('http://192.168.1.110:3000/getplaylist')
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (receivedJson) {
+        //console.log(JSON.stringify(myJson));
+        //console.log(myJson.votesForSong1);
+        //this.setState({titleText: myJson.votesForSong1});
+        playlistJson = receivedJson;
+      });
+      //var trackname = playlistJson[0].track.name; 
+      //this.setState({titleText: ""+trackname});
+      //console.log("TRACKNAME:"+trackname);
+  }
+
+  setButtonTexts() {
+    try {
+      var trackname = playlistJson[0].track.name;
+      this.setState({Button1Text: ""+trackname});
+
+      trackname = playlistJson[1].track.name;
+      this.setState({Button2Text: ""+trackname});
+
+      trackname = playlistJson[2].track.name;
+      this.setState({Button3Text: ""+trackname});
+
+      trackname = playlistJson[3].track.name;
+      this.setState({Button4Text: ""+trackname});
+
+      trackname = playlistJson[4].track.name;
+      this.setState({Button5Text: ""+trackname});
+
+    }
+    catch(err) {
+      console.log("ERROR!!!!!!!!!!!!!!!!")
+    }
+
+  }
+
   componentDidMount() {
     this.timer = setInterval(() => this.getVotesFromServer(), 1000)
+    this.timer = setInterval(() => this.getPlaylistFromServer(), 1000)
+    this.timer = setInterval(() => this.setButtonTexts(), 1000)
   }
 
   render() {
@@ -66,48 +97,42 @@ export default class App extends Component {
         <View style={styles.buttonContainer}>
           <Button
             onPress={(event) => this._onPressButton(event, '1')}
-            title="Song1"
+            title={this.state.Button1Text}
             color="#841584"
-            testID="1"
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
             onPress={(event) => this._onPressButton(event, '2')}
-            title="Song2"
+            title={this.state.Button2Text}
             color="#841584"
-            testID="2"
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
             onPress={(event) => this._onPressButton(event, '3')}
-            title="Song3"
+            title={this.state.Button3Text}
             color="#841584"
-            testID="3"
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
             onPress={(event) => this._onPressButton(event, '4')}
-            title="Song4"
+            title={this.state.Button4Text}
             color="#841584"
-            testID="4"
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
             onPress={(event) => this._onPressButton(event, '5')}
-            title="Song5"
+            title={this.state.Button5Text}
             color="#841584"
-            testID="5"
           />
         </View>
         <View style={styles.buttonContainer}>
           <Button
-            title={this.state.titleText}
+            title={this.state.Button6Text}
             color="#841584"
-            testID="6"
           />
         </View>
       </View>

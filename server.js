@@ -28,6 +28,35 @@ app.get('/getinfo', function (req, res) {
     });
 });
 
+app.get('/getplaylist', function (req, res) {
+    console.log("Incoming GET playlist");
+    res.json(playlistItems);
+    //res.end(playlistItems);
+});
+
+//Spotify requests
+var Spotify = require('node-spotify-api');
+ 
+var spotify = new Spotify({
+  id: 'bddfdc9233b5493899809dcc42ca5cc3',
+  secret: 'd97a1e581b5f4b4b9da348d6a0529e02'
+});
+
+var playlistItems; //request sonucu spotifydan gelecek playlist objesi
+ 
+spotify
+  .request('https://api.spotify.com/v1/playlists/3uZ0DcmMUUzola8ZC2HxRn/tracks')
+  .then(function(data) {
+  	// data'da items diye bi array geliyor onun track objeleri var
+    //console.log(data);
+    //console.log(data.items[0].track.album.images[0].url);
+    playlistItems = data.items;
+    console.log(playlistItems);
+  })
+  .catch(function(err) {
+    console.error('Error occurred: ' + err); 
+  });
+
 // start the server
 app.listen(port, host);
 console.log('Server started! At port ' + port);
