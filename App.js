@@ -18,7 +18,7 @@ export default class App extends Component {
 
   _onPressButton(event, buttonID) {
     Alert.alert("Voted for song " + buttonID)
-    fetch('http://192.168.1.110:3000/sendvote', {
+    fetch('http://192.168.1.131:3000/sendvote', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -30,7 +30,7 @@ export default class App extends Component {
     });
   }
   getVotesFromServer() {
-    fetch('http://192.168.1.110:3000/getinfo')
+    fetch('http://192.168.1.131:3000/getinfo')
       .then(function (response) {
         return response.json();
       })
@@ -46,7 +46,7 @@ export default class App extends Component {
   }
 
   getPlaylistFromServer() {
-    fetch('http://192.168.1.110:3000/getplaylist')
+    fetch('http://192.168.1.131:3000/getplaylist')
       .then(function (response) {
         return response.json();
       })
