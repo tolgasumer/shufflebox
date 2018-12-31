@@ -17,6 +17,11 @@ class Vote extends Component {
       Button6Text: "VOTES",
       Button7Text: "Winner",
       Button8Text: "currentPlaying",
+      Song1Vote: "Song1Votes",
+      Song2Vote: "Song2Votes",
+      Song3Vote: "Song3Votes",
+      Song4Vote: "Song4Votes",
+      Song5Vote: "Song5Votes",
       img1url: "img1",
       img2url: "img2",
       img3url: "img3",
@@ -30,7 +35,7 @@ class Vote extends Component {
   
   _onPressButton(event, buttonID) {
     Alert.alert("Voted for song " + buttonID)
-    fetch('http://192.168.0.128:3000/sendvote', {
+    fetch('http://192.168.1.124:3000/sendvote', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -42,7 +47,7 @@ class Vote extends Component {
     });
   }
   getVotesFromServer() {
-    fetch('http://192.168.0.128:3000/getinfo')
+    fetch('http://192.168.1.124:3000/getinfo')
       .then(function (response) {
         return response.json();
       })
@@ -59,7 +64,7 @@ class Vote extends Component {
   }
 
   getPlaylistFromServer() {
-    fetch('http://192.168.0.128:3000/getplaylist')
+    fetch('http://192.168.1.124:3000/getplaylist')
       .then(function (response) {
         return response.json();
       })
@@ -75,7 +80,7 @@ class Vote extends Component {
       //console.log("TRACKNAME:"+trackname);
   }
   getVotablesFromServer() {
-    fetch('http://192.168.0.128:3000/getvotables')
+    fetch('http://192.168.1.124:3000/getvotables')
       .then(function (response) {
         return response.json();
       })
@@ -115,7 +120,30 @@ class Vote extends Component {
       this.setState({Button8Text: ""+trackname});
     }
     catch(err) {
-      console.log("ERROR!!!!!!!!!!!!!!!!")
+      console.log("ERROR!!!!!!!!!!!!!!!!");
+    }
+  }
+
+  setButtonSongsVotes() {
+    try {
+      var songVotes = votesJson.votesForSong1;
+      this.setState({Song1Vote: ""+songVotes});
+
+      var songVotes = votesJson.votesForSong2;
+      this.setState({Song2Vote: ""+songVotes});
+
+      var songVotes = votesJson.votesForSong3;
+      this.setState({Song3Vote: ""+songVotes});
+
+      var songVotes = votesJson.votesForSong4;
+      this.setState({Song4Vote: ""+songVotes});
+
+      var songVotes = votesJson.votesForSong5;
+      this.setState({Song5Vote: ""+songVotes});
+
+    }
+    catch(err) {
+      console.log("ERROR!!!!!!!!!!!!!!!!");
     }
   }
 
@@ -143,17 +171,19 @@ class Vote extends Component {
       this.setState({img7url: ""+trackImage});
     }
     catch(err) {
-      console.log("ERROR!!!!!!!!!!!!!!!!")
+      console.log("ERROR!!!!!!!!!!!!!!!!");
     }
   }
-  
 
+  
   componentDidMount() {
     this.timer = setInterval(() => this.getVotesFromServer(), 1000)
     this.timer = setInterval(() => this.getVotablesFromServer(), 1000)
     this.timer = setInterval(() => this.getPlaylistFromServer(), 1000)
+    this.timer = setInterval(() => this.setButtonSongsVotes(), 1000)
     this.timer = setInterval(() => this.setButtonTexts(), 1000)
     this.timer = setInterval(() => this.setButtonImages(), 1000)
+   
   }
  
   render() {
@@ -165,13 +195,18 @@ class Vote extends Component {
             source={{ uri: this.state.img1url }} 
             style={{ width: 50, height: 58 }}
           />
+
           <Button 
             onPress={(event) => this._onPressButton(event, '1')}
             title={this.state.Button1Text}
             color="#841584"
             testID="1"
           />
-         
+          <Button 
+            title={this.state.Song1Vote} 
+            style={{ width: 50, height: 58 }}
+          />
+          
         </CardSection>
   
         <CardSection>
@@ -184,6 +219,10 @@ class Vote extends Component {
             title={this.state.Button2Text}
             color="#841584"
             testID="2"
+          />
+          <Button 
+            title={this.state.Song2Vote} 
+            style={{ width: 50, height: 58 }}
           />
         </CardSection>
   
@@ -198,6 +237,10 @@ class Vote extends Component {
             color="#841584"
             testID="3"
           />
+          <Button 
+            title={this.state.Song3Vote} 
+            style={{ width: 50, height: 58 }}
+          />
         </CardSection>
   
         <CardSection>
@@ -208,9 +251,14 @@ class Vote extends Component {
           <Button
              onPress={(event) => this._onPressButton(event, '4')}
              title={this.state.Button4Text}
+             style={{ flex: 1, fontSize: 16 }}
              color="#841584"
              testID="4"
           />
+          <Button 
+            title={this.state.Song4Vote} 
+            style={{ width: 50, height: 58 }}
+          />  
         </CardSection>
   
          <CardSection>
@@ -224,6 +272,12 @@ class Vote extends Component {
               color="#841584"
               testID="5"
           />
+
+          <Button 
+            title={this.state.Song5Vote} 
+            style={{ width: 50, height: 58 }}
+          />
+
         </CardSection>
         <CardSection>
           <Text style={{ fontSize: 50, textAlign: 'center', flex: 1, fontStyle: 'italic', color: 'pink' }}>
@@ -262,4 +316,3 @@ class Vote extends Component {
 }
 
 export default Vote;
-
