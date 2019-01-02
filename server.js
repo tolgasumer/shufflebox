@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var port = 3000;
 var host = '0.0.0.0';
-var spotifyToken = 'BQD8u9wdAYk8Hf7eyml3r5ppXqo9UpIecMDbkCq6CTwxJY2kl709lo-oSCYLh1o4kQXVqhDKA6n_95Ifxxu6uvtmeYWqITgC96-CH7P-65BbFFClLcHQpA1-B1QqOIO-rTNSzHRyZ3cOG0HR818D8IZD1BHLwPtV-_M_1iRt22UAQ5ReFYCtZdlgxowteNeAE-eQyGTuAWa2TNSqTVo97fjuPgMBpZXE8sCf_1G8K72D_5qCCYhekpEyBv4ttdoUH3QshYWDINTRCXQ'
+var spotifyToken = 'BQD-QKmIjJT5H8_zuvsQhUO6midFaf14BiAxCuvI1nlLKuuuQAKoctr0DBOULEGGD_dTJZSB3-3DzAhu3eh45LpMC7A7JGwGV_Ym_Kd3KbT9ernzqXpjY5xvB8tYVPfjxLjKrAz9Yscvw-S0RxvvlCS2wm7fvpCOO2oZ4GWOJKPB5ALIEXZYdpQrPA-suVEYeIdiC9qtMjp5JwGkgBD7PllACuPDmTI1gnCZDYY541l7btUjTjmwuABnE3S4OAEqvCIk73QYqGzV3GI'
 
 var bodyParser = require('body-parser');
 const axios = require('axios')
@@ -77,8 +77,9 @@ spotify
 
 // interval
 setTimeout(function(){GetPlaylist()}, 1000);
-setTimeout(function(){PlayWinner()}, 15000);
+setTimeout(function(){PlayWinner()}, 90000);
 setTimeout(function(){RefreshVotableSongs()}, 5000);
+
 setInterval(function () { DetermineMostVotedCurrently(); }, 1000);
 setInterval(function () { GetCurrentlyPlaying(); }, 3000);
 setInterval(function () { GetPlaylist(); }, 10000);
@@ -93,13 +94,14 @@ function DetermineMostVotedCurrently() {
   }
   else
   {
-    console.log("DetermineMostVotedCurrently(): Votes array is empty, winner hasn't been changed");
+    //console.log("DetermineMostVotedCurrently(): Votes array is empty, winner hasn't been changed");
   }
   //return votes.indexOf(Math.max(...votes));
 }
 
 function PlayWinner() {
-  PutWinningSongToFirst();
+	if(votes[0] + votes[1] + votes[2] + votes[3] + votes[4] > 0){
+		PutWinningSongToFirst();
   setTimeout(function(){PlayTheFirstSongOnPlaylist()}, 2000);
 
   durationOfNextSong = playlistItems[currentWinner].track.duration_ms;
@@ -109,6 +111,9 @@ function PlayWinner() {
   RefreshVotableSongs();
 
   setTimeout(function(){PlayWinner()}, durationOfNextSong);
+
+	}
+  
 
 }
 
@@ -188,7 +193,14 @@ function RefreshVotableSongs()
 
   for(var i=0;i<votableSongIndexes.length;i++)
   {
-    votableSongIndexes[i] = getRandomInt(0,playlistLength-1);
+  	var randomInt = getRandomInt(0,playlistLength-1);
+  	if(votableSongIndexes.includes(randomInt)) {
+  		i--;
+  	}
+  	else {
+  		votableSongIndexes[i] = randomInt;
+  	}
+    //votableSongIndexes[i] = getRandomInt(0,playlistLength-1);
   }
   votes = [0, 0, 0, 0, 0];
   console.log(votableSongIndexes);
