@@ -53,8 +53,8 @@ app.get('/getvotables', function (req, res) {
 var Spotify = require('node-spotify-api');
 
 var spotify = new Spotify({
-  id: 'bddfdc9233b5493899809dcc42ca5cc3',
-  secret: 'd97a1e581b5f4b4b9da348d6a0529e02'
+  id: 'SPOTIFY_API_ID',
+  secret: 'SPOTIFY_API_SECRET'
 });
 
 var playlistItems; //request sonucu spotifydan gelecek playlist objesi
