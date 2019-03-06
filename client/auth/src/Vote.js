@@ -15,7 +15,7 @@ class Vote extends Component {
       Button4Text: "Song4",
       Button5Text: "Song5",
       Button6Text: "VOTES",
-      Button7Text: "Winner",
+      Button7Text: "No Votes",
       Button8Text: "currentPlaying",
       Song1Vote: "Song1Votes",
       Song2Vote: "Song2Votes",
@@ -35,7 +35,7 @@ class Vote extends Component {
   
   _onPressButton(event, buttonID) {
     Alert.alert("Voted for song " + buttonID)
-    fetch('http://172.20.10.6:3000/sendvote', {
+    fetch('https://shufflebox.herokuapp.com/sendvote', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -47,7 +47,7 @@ class Vote extends Component {
     });
   }
   getVotesFromServer() {
-    fetch('http://172.20.10.6:3000/getinfo')
+    fetch('https://shufflebox.herokuapp.com/getinfo')
       .then(function (response) {
         return response.json();
       })
@@ -64,7 +64,7 @@ class Vote extends Component {
   }
 
   getPlaylistFromServer() {
-    fetch('http://172.20.10.6:3000/getplaylist')
+    fetch('https://shufflebox.herokuapp.com/getplaylist')
       .then(function (response) {
         return response.json();
       })
@@ -80,7 +80,7 @@ class Vote extends Component {
       //console.log("TRACKNAME:"+trackname);
   }
   getVotablesFromServer() {
-    fetch('http://172.20.10.6:3000/getvotables')
+    fetch('https://shufflebox.herokuapp.com/getvotables')
       .then(function (response) {
         return response.json();
       })
@@ -113,11 +113,11 @@ class Vote extends Component {
       trackname = playlistJson[votablesJson[4]].track.name;
       this.setState({Button5Text: ""+trackname});
 
-      trackname = playlistJson[votesJson.lastWinner].track.name;
-      this.setState({Button7Text: ""+trackname});
-
       trackname = votesJson.currentlyPlayingName;
       this.setState({Button8Text: ""+trackname});
+
+      trackname = playlistJson[votesJson.lastWinner].track.name;
+      this.setState({Button7Text: ""+trackname});
     }
     catch(err) {
       console.log("ERROR!!!!!!!!!!!!!!!!");
@@ -164,11 +164,11 @@ class Vote extends Component {
       var trackImage = playlistJson[votablesJson[4]].track.album.images[0].url;
       this.setState({img5url: ""+trackImage});
 
-      var trackImage = playlistJson[votesJson.lastWinner].track.album.images[0].url;
-      this.setState({img6url: ""+trackImage});
-
       var trackImage = votesJson.currentlyPlayingUrl;
       this.setState({img7url: ""+trackImage});
+
+      var trackImage = playlistJson[votesJson.lastWinner].track.album.images[0].url;
+      this.setState({img6url: ""+trackImage});
     }
     catch(err) {
       console.log("ERROR!!!!!!!!!!!!!!!!");
