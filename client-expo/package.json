@@ -26,7 +26,7 @@
     "babel-preset-expo": "^5.0.0"
   },
   "private": true,
-  "name": "update2",
+  "name": "shufflebox_v1",
   "version": "1.0.0",
   "author": "",
   "license": "ISC",

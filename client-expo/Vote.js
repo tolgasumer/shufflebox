@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 import { CardSection, Card } from './components/common';
 import { TabBarTop } from 'react-navigation';
+import { Screen } from '@shoutem/ui';
+import { LinearGradient } from 'expo';
+import { VoteHeader } from './components/common/VoteHeader';
 
 class Vote extends Component {
   constructor(props) {
@@ -193,6 +196,8 @@ class Vote extends Component {
   render() {
     return (
       <ScrollView>
+        <VoteHeader headerText={'Voting'} />
+
         <Card>
           <CardSection>
             <Image
@@ -282,37 +287,13 @@ class Vote extends Component {
             />
           </CardSection>
           <CardSection>
-            <Text
-              style={{
-                fontSize: 50,
-                textAlign: 'center',
-                flex: 1,
-                fontStyle: 'italic',
-                color: 'pink'
-              }}
-            >
-              Next song
-            </Text>
-          </CardSection>
-          <CardSection>
+            <Text> </Text>
+
             <Image
-              source={{ uri: this.state.img6url }}
-              style={{ width: 50, height: 58 }}
+              style={{ width: 75, height: 75 }}
+              source={require('./components/img/pulse.png')}
             />
-            <Button title={this.state.Button7Text} color='#841584' />
-          </CardSection>
-          <CardSection>
-            <Text
-              style={{
-                fontSize: 25,
-                textAlign: 'center',
-                flex: 1,
-                fontStyle: 'italic',
-                color: 'pink'
-              }}
-            >
-              Currently Playing...
-            </Text>
+            <Text> </Text>
           </CardSection>
           <CardSection>
             <Image
@@ -320,11 +301,52 @@ class Vote extends Component {
               style={{ width: 50, height: 58 }}
             />
             <Button title={this.state.Button8Text} color='#841584' />
+            <Text> </Text>
+          </CardSection>
+          <CardSection>
+            <Text> </Text>
+            <Image
+              style={{ width: 75, height: 75 }}
+              source={require('./components/img/next.png')}
+            />
+            <Text> </Text>
+          </CardSection>
+          <CardSection>
+            <Image
+              source={{ uri: this.state.img6url }}
+              style={{ width: 50, height: 58 }}
+            />
+            <Button title={this.state.Button7Text} color='#841584' />
+            <Text> </Text>
           </CardSection>
         </Card>
       </ScrollView>
     );
   }
 }
+const styles = {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    marginTop: 80
+  },
+  backgroundImage: {
+    flex: 0,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'center' // or 'stretch'
+  },
+  inputIcon: {
+    width: 150,
+    height: 150,
+    justifyContent: 'center',
+    resizeMode: 'cover',
+    margin: 0,
+    padding: 0,
+    flex: 1
+  }
+};
 
 export default Vote;

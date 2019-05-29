@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "update2",
-    "slug": "update2",
+    "name": "shufflebox",
+    "slug": "shufflebox",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": ["ios", "android"],

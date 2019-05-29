@@ -191,7 +191,7 @@ class Chart extends Component {
     this.getSimilarityFromServer('37i9dQZF1DX08jcQJXDnEQ', playlists[0].id);
     return (
       <Screen>
-        <Header headerText={'recommended'} />
+        <Header headerText={'Discover'} />
         <ListView
           data={playlists}
           renderRow={this.renderRow}
