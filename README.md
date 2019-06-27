@@ -1,8 +1,7 @@
 # shufflebox
+# WIP
+**React-Native Front-End**
 
-Spotify API OAuth scopes:
-user-modify-playback-state,playlist-modify-public,playlist-modify-private,user-read-currently-playing
+server: https://shufflebox.herokuapp.com
 
-server ip: https://shufflebox.herokuapp.com
-
-server repo -> https://github.com/tolgasumer/shufflebox-server
+backend repo -> https://github.com/tolgasumer/shufflebox-server
